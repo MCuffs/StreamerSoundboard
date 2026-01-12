@@ -1,0 +1,54 @@
+{
+    "name": "streamer-soundboard",
+    "version": "1.0.0",
+    "description": "Streamer Reaction Soundboard",
+    "main": "src/main/index.js",
+    "scripts": {
+        "dev": "concurrently \"vite\" \"wait-on tcp:5173 && electron .\"",
+        "build": "vite build",
+        "dist": "npm run build && electron-builder"
+    },
+    "build": {
+        "appId": "com.streamer.soundboard",
+        "productName": "Streamer Soundboard",
+        "files": [
+            "dist/**/*",
+            "src/main/**/*",
+            "package.json"
+        ],
+        "directories": {
+            "output": "release"
+        },
+        "mac": {
+            "target": "dmg"
+        },
+        "win": {
+            "target": "nsis"
+        },
+        "nsis": {
+            "oneClick": false,
+            "perMachine": false,
+            "allowToChangeInstallationDirectory": true
+        }
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "clsx": "^2.1.0",
+        "electron-store": "^11.0.2",
+        "howler": "^2.2.4",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "rxjs": "^7.8.2",
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.2.1",
+        "concurrently": "^8.2.2",
+        "electron": "^28.2.0",
+        "electron-builder": "^26.4.0",
+        "vite": "^5.1.0",
+        "wait-on": "^7.2.0"
+    }
+}
