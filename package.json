@@ -20,7 +20,8 @@
             "output": "release"
         },
         "mac": {
-            "target": "dmg"
+            "target": "dmg",
+            "icon": "build/icon.png"
         },
         "win": {
             "target": "nsis"
