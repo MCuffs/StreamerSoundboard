@@ -11,5 +11,18 @@ contextBridge.exposeInMainWorld('electronAPI', {
     },
     platform: process.platform,
     getStore: (key) => ipcRenderer.invoke('get-store', key),
-    setStore: (key, val) => ipcRenderer.invoke('set-store', key, val)
+    setStore: (key, val) => ipcRenderer.invoke('set-store', key, val),
+    selectImage: () => ipcRenderer.invoke('select-image'),
+    toggleOverlay: () => ipcRenderer.invoke('toggle-overlay'),
+    onReactionsUpdated: (callback) => {
+        const subscription = (_event, value) => callback(value)
+        ipcRenderer.on('reactions-updated', subscription)
+        return () => ipcRenderer.removeListener('reactions-updated', subscription)
+    },
+    onSettingsUpdated: (callback) => {
+        const subscription = (_event, value) => callback(value)
+        ipcRenderer.on('settings-updated', subscription)
+        return () => ipcRenderer.removeListener('settings-updated', subscription)
+    },
+    previewSettings: (settings) => ipcRenderer.send('preview-settings', settings)
 })

@@ -13,6 +13,7 @@ const POLICY = {
 import VirtualKeyboard from './components/VirtualKeyboard';
 import TrimModal from './components/TrimModal';
 import Visualizer from './components/Visualizer';
+import ReactionSettings from './components/ReactionSettings';
 
 function App() {
     const [tracks, setTracks] = useState([]);
@@ -28,6 +29,7 @@ function App() {
     // Modal State
     const [editingTrackId, setEditingTrackId] = useState(null);
     const [editingTrimTrackId, setEditingTrimTrackId] = useState(null);
+    const [showReactions, setShowReactions] = useState(false);
 
     // Storage for Howl instances: { [trackId]: Howl }
     const howlsRef = useRef({});
@@ -266,11 +268,18 @@ function App() {
             onDrop={handleDrop}
             onDragOver={handleDragOver}
         >
-            <header style={{ marginBottom: '40px' }}>
+            <header style={{ marginBottom: '40px', WebkitAppRegion: 'drag' }}>
                 <h1 className="header-title">Streamer Soundboard</h1>
                 <div className="header-subtitle">Minimal Audio Control Center</div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px', WebkitAppRegion: 'no-drag' }}>
+                    <button
+                        className="btn-outline"
+                        onClick={() => setShowReactions(true)}
+                        style={{ padding: '8px 16px', fontSize: '0.8rem' }}
+                    >
+                        Reaction Board
+                    </button>
                     <Visualizer />
                 </div>
             </header>
@@ -384,6 +393,10 @@ function App() {
                     onConfirm={confirmTrim}
                     onCancel={() => setEditingTrimTrackId(null)}
                 />
+            )}
+
+            {showReactions && (
+                <ReactionSettings onClose={() => setShowReactions(false)} />
             )}
         </div>
     );
